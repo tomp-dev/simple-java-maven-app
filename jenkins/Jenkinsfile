@@ -29,13 +29,10 @@ pipeline {
             steps {
                 echo "building..."
                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
-
             }
 
             post {
-                echo "recording test results..."
-                // If Maven was able to run the tests, even if some of the test
-                // failed, record the test results and archive the jar file.
+                // record the test results and archive the jar file.
                 success {
                     junit '**/target/surefire-reports/TEST-*.xml'
                     archiveArtifacts 'target/*.jar'
