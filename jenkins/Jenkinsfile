@@ -1,3 +1,5 @@
+#!/usr/bin/env groovy
+
 pipeline {
     agent any
 
@@ -9,6 +11,7 @@ pipeline {
     stages {
         stage('test tool installation') {
             steps {
+                echo "testing tool installation..."
                 sh 'java -version'
                 sh 'which java'
                 sh 'mvn -version'
@@ -17,17 +20,20 @@ pipeline {
         }
         stage('source code checkout') {
             steps {
+                echo "checking out code...."
                 // clone code from GitHub repo
                 git changelog: false, poll: false, url: 'https://github.com/Tom-Developer/simple-java-maven-app'
             }
         }
         stage('build') {
             steps {
+                echo "building..."
                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
 
             }
 
             post {
+                echo "recording test results..."
                 // If Maven was able to run the tests, even if some of the test
                 // failed, record the test results and archive the jar file.
                 success {
