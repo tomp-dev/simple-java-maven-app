@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+
+    tools {
+        jdk 'openjdk-11'
+        maven 'maven-3.6.3'
+    }
+
+    stages {
+        stage('test tool installation') {
+            steps {
+                sh 'java -version'
+                sh 'which java'
+                sh 'mvn -version'
+                sh 'which mvn'
+            }
+        }
+        stage('source code checkout') {
+            steps {
+                // clone code from GitHub repo
+                git changelog: false, poll: false, url: 'https://github.com/Tom-Developer/simple-java-maven-app'
+            }
+        }
+        stage('build') {
+            steps {
+                sh "mvn -Dmaven.test.failure.ignore=true clean package"
+
+            }
+
+            post {
+                // If Maven was able to run the tests, even if some of the test
+                // failed, record the test results and archive the jar file.
+                success {
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                    archiveArtifacts 'target/*.jar'
+                }
+            }
+        }
+    }
+}
