@@ -13,15 +13,12 @@ pipeline {
             steps {
                 echo "testing tool installation..."
                 sh 'java -version'
-                //sh 'which java'
                 sh 'mvn -version'
-                //sh 'which mvn'
             }
         }
         stage('source code checkout') {
             steps {
                 echo "checking out code...."
-                // clone code from GitHub repo
                 git changelog: false, poll: false, url: 'https://github.com/Tom-Developer/simple-java-maven-app'
             }
         }
