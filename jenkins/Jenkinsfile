@@ -13,6 +13,7 @@ pipeline {
             steps {
                 echo "testing tool installation..."
                 sh 'java -version'
+                sh 'java -version'
                 sh 'mvn -version'
             }
         }
