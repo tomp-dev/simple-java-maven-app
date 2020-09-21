@@ -12,10 +12,10 @@ pipeline {
         stage('test tool installation') {
             steps {
                 echo "testing tool installation..."
-                //sh 'java -version'
-                sh 'which java'
-                //sh 'mvn -version'
-                sh 'which mvn'
+                sh 'java -version'
+                //sh 'which java'
+                sh 'mvn -version'
+                //sh 'which mvn'
             }
         }
         stage('source code checkout') {
